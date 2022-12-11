@@ -1,40 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {deleteAllPizzas, countPrices} from '../../actions';
+import PurchaseItem from './components/PurchaseItem';
 
-import PurchaseItem from '../purchaseItem';
-
-const Cart = ({data, ChangeAmount, Delete}) => {
-  const [price, setPrice] = useState(0);
-
+const Cart = ({cart, deleteAll, price, countPrice}) => {
   useEffect(() => {
-    setPrice(() => 0);
-    data.forEach(element => {
-      setPrice(prevState => (prevState += element.price * element.amount));
-    });
-    console.log(data);
-  }, [data, Delete]);
+    countPrice();
+  });
 
-  const elements = data.map((item, key) => {
-    return (
-      <PurchaseItem
-        onDelete={Delete}
-        onChangeAmount={ChangeAmount}
-        key={key}
-        {...item}
-      />
-    );
+  const elements = cart.map((item, key) => {
+    return <PurchaseItem key={key} {...item} />;
   });
 
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
         <Text style={styles.title}>{price} ₽</Text>
-        <TouchableOpacity style={styles.trash} onPress={() => Delete()}>
+        <TouchableOpacity style={styles.trash} onPress={deleteAll}>
           <Image
             source={require('../../images/delete.png')}
             style={styles.trashIcon}
           />
-          <Text style={{color: 'gray'}}>Очистить корзину</Text>
+          <Text style={styles.trashText}>Очистить корзину</Text>
         </TouchableOpacity>
       </View>
       {elements}
@@ -69,6 +57,20 @@ const styles = StyleSheet.create({
     height: 14,
     marginRight: 3,
   },
+  trashText: {
+    color: 'gray',
+  },
 });
 
-export default Cart;
+const mapStateToProps = ({cart, price}) => {
+  return {cart, price};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteAll: () => dispatch(deleteAllPizzas),
+    countPrice: () => dispatch(countPrices),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

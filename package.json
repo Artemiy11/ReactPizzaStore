@@ -19,6 +19,8 @@
     "@react-navigation/native-stack": "^6.8.0",
     "@react-navigation/stack": "^6.2.3",
     "eslint-plugin-react-hooks": "^5.0.0-next-f0efa1164-20220901",
+    "mobx": "^6.7.0",
+    "mobx-react": "^7.6.0",
     "react": "18.0.0",
     "react-native": "0.69.5",
     "react-native-counter-input": "^0.1.9",

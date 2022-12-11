@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
 
 import SwitchSelector from 'react-native-switch-selector';
-import {Button} from '../../components/button';
+import {Button} from '../../../components/button';
 
-const PizzaCart = ({name, price, image, onAdding}) => {
+const PizzaItem = ({name, price, image, id, onAdding}) => {
   const [pizza, setPizza] = useState({
     name: name,
     amount: 1,
@@ -12,7 +12,7 @@ const PizzaCart = ({name, price, image, onAdding}) => {
     image: image,
     doughType: 'Тонкое тесто',
     length: 25,
-    id: 1,
+    id: id,
   });
 
   return (
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PizzaCart;
+export default PizzaItem;

@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {changePizzaAmount, deletePizza} from '../../../actions';
 
 const PurchaseItem = ({
   id,
@@ -33,7 +35,14 @@ const PurchaseItem = ({
           <Text style={{fontWeight: 'bold', fontSize: 17}}>{price} ₽ </Text>
         </View>
         <View style={styles.counter}>
-          <TouchableOpacity onPress={() => onChangeAmount(id, -1)}>
+          <TouchableOpacity
+            onPress={() => {
+              if (amount - 1 < 1) {
+                onDelete(id);
+              } else {
+                onChangeAmount(id, -1);
+              }
+            }}>
             <Text style={styles.counterText}>–</Text>
           </TouchableOpacity>
           <Text style={styles.counterText}>{amount}</Text>
@@ -111,4 +120,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PurchaseItem;
+const mapDispatchToProps = dispatch => {
+  return {
+    onDelete: id => dispatch(deletePizza(id)),
+    onChangeAmount: (id, num) => dispatch(changePizzaAmount(id, num)),
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(PurchaseItem);
