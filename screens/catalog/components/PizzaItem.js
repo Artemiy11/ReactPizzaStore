@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
+import Text from '../../../components/text';
 
 import SwitchSelector from 'react-native-switch-selector';
 import {Button} from '../../../components/button';

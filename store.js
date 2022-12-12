@@ -1,6 +1,41 @@
-import {createStore} from 'redux';
-import reducer from './reducers';
+import {makeAutoObservable} from 'mobx';
 
-const store = createStore(reducer);
+class Store {
+  filterPizzas = '';
+  catalogPizzas = [
+    {
+      name: 'Сырная',
+      price: '450',
+      image: require('./images/cheese.jpg'),
+      id: 1,
+    },
+    {
+      name: 'Сырный цыпленок',
+      price: '385',
+      image: require('./images/asian.jpg'),
+      id: 2,
+    },
+    {
+      name: 'Чизбургер-пицца',
+      price: '395',
+      image: require('./images/burger.jpg'),
+      id: 3,
+    },
+    {
+      name: 'Креветки по-азиатски',
+      price: '290',
+      image: require('./images/shrimps.jpg'),
+      id: 4,
+    },
+  ];
 
-export default store;
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  updatePizzaFilter(text) {
+    this.filterPizzas = text;
+  }
+}
+
+export const store = new Store();

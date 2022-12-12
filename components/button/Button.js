@@ -1,5 +1,6 @@
 import React from 'react';
-import {TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import Text from '../text';
 
 const Button = props => {
   return (

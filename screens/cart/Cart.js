@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import {deleteAllPizzas, countPrices} from '../../actions';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import Text from '../../components/text';
 import PurchaseItem from './components/PurchaseItem';
 
 const Cart = ({cart, deleteAll, price, countPrice}) => {
@@ -62,15 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({cart, price}) => {
-  return {cart, price};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    deleteAll: () => dispatch(deleteAllPizzas),
-    countPrice: () => dispatch(countPrices),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default Cart;

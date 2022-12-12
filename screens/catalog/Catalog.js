@@ -1,33 +1,42 @@
 import React from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, SafeAreaView, StyleSheet} from 'react-native';
 import PizzaItem from './components/PizzaItem';
-import {connect} from 'react-redux';
-import {addPizzasToCart} from '../../actions';
-
+import {store} from '../../store';
 import {containerStyle} from '../../styles/styles';
+import {observer} from 'mobx-react';
+import {windowHeight} from '../../styles/styles';
+import Menu from '../../components/menu/Menu';
 
-const Catalog = ({onAdding, pizzas}) => {
-  return (
-    <ScrollView>
-      <View style={containerStyle}>
-        {pizzas.map((pizza, key) => {
-          return <PizzaItem key={key} onAdding={onAdding} {...pizza} />;
-        })}
-      </View>
-    </ScrollView>
+const Catalog = observer(() => {
+  const pizzas = store.catalogPizzas.filter(pizza =>
+    pizza.name.toLowerCase().includes(store.filterPizzas.toLowerCase()),
   );
-};
+  console.log(pizzas);
+  return (
+    <SafeAreaView style={styles.screenColor}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={containerStyle}>
+          {pizzas.map((pizza, key) => {
+            return <PizzaItem key={key} {...pizza} />;
+          })}
+        </View>
+      </ScrollView>
+      <Menu current="menu" />
+    </SafeAreaView>
+  );
+});
 
-const mapStateToProps = state => {
-  return {
-    pizzas: state.pizzas,
-  };
-};
+const styles = StyleSheet.create({
+  screenColor: {
+    position: 'relative',
+    backgroundColor: '#fff',
+  },
+  container: {
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    minHeight: windowHeight,
+  },
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onAdding: pizza => dispatch(addPizzasToCart(pizza)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Catalog);
+export default Catalog;

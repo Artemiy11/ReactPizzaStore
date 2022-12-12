@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import {changePizzaAmount, deletePizza} from '../../../actions';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import Text from '../../../components/text';
 
 const PurchaseItem = ({
   id,
@@ -120,11 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onDelete: id => dispatch(deletePizza(id)),
-    onChangeAmount: (id, num) => dispatch(changePizzaAmount(id, num)),
-  };
-};
-
-export default connect(undefined, mapDispatchToProps)(PurchaseItem);
+export default PurchaseItem;
