@@ -2,12 +2,20 @@ import React from 'react';
 import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import Text from '../text';
 
-const Button = props => {
+const Button = ({onPress, style, children, type = 'primary'}) => {
   return (
-    <TouchableOpacity onPress={() => props.click()}>
-      <View style={props.style}>
-        <Text style={{color: props.textColor, fontWeight: 'bold'}}>
-          {props.text}
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[
+          type === 'primary' ? styles.primaryBtn : styles.outlineBtn,
+          style,
+        ]}>
+        <Text
+          style={{
+            color: type === 'primary' ? '#fff' : '#000',
+            fontWeight: 'bold',
+          }}>
+          {children}
         </Text>
       </View>
     </TouchableOpacity>
@@ -32,6 +40,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1.5,
     borderRadius: 20,
+  },
+  primaryBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    backgroundColor: '#FE5F1E',
+    width: 132,
+    height: 40,
+  },
+  outlineBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    borderColor: '#FE5F1E',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    width: 132,
+    height: 40,
   },
 });
 

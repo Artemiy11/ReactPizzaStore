@@ -1,33 +1,56 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import {LocalSvg} from 'react-native-svg';
 import Text from '../text';
+import {mainColor} from '../../styles/styles';
+import theme from '../../theme';
 
-const MenuButton = ({text, image, imageActive, current}) => {
+const TabBarButton = ({screen, accessibilityState, onPress, productCount}) => {
+  const focused = accessibilityState.selected;
+
   return (
-    <TouchableOpacity style={styles.btn}>
+    <TouchableOpacity style={styles.tubButton} onPress={onPress}>
       <LocalSvg
-        style={styles.icon}
-        width={30}
-        height={30}
-        asset={current ? imageActive : image}
+        width={theme.space30}
+        height={theme.space30}
+        asset={focused ? screen.imageActive : screen.image}
       />
-      <Text style={styles.text}>{text}</Text>
+      <Text style={[styles.text, focused ? {color: mainColor} : {}]}>
+        {screen.text}
+      </Text>
+      {screen.value === 'Cart' && productCount !== 0 ? (
+        <View style={styles.notification}>
+          <Text style={styles.notificationText}>{productCount}</Text>
+        </View>
+      ) : null}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  btn: {
-    // backgroundColor: 'green',
+  tubButton: {
+    width: '33.3%',
+    height: theme.space50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  icon: {
-    alignSelf: 'center',
+  text: {marginTop: theme.space5},
+  notification: {
+    position: 'absolute',
+    right: theme.aligned(39),
+    top: theme.aligned(-5),
+    width: theme.space20,
+    height: theme.space20,
+    backgroundColor: mainColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: theme.space18,
   },
-  text: {
-    marginTop: 5,
-    fontWeight: '500',
+  notificationText: {
+    color: '#fff',
+    fontWeight: '600',
   },
 });
 
-export default MenuButton;
+export default TabBarButton;

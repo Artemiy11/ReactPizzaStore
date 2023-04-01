@@ -1,18 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Text from '../../../components/text';
+import {store} from '../../../store';
 
-const PurchaseItem = ({
-  id,
-  name,
-  price,
-  amount,
-  image,
-  doughType,
-  length,
-  onDelete,
-  onChangeAmount,
-}) => {
+const PurchaseItem = ({id, name, price, amount, image, doughType, length}) => {
   return (
     <View style={styles.purchaseWrapper}>
       <View style={styles.purchaseHead}>
@@ -25,7 +16,9 @@ const PurchaseItem = ({
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.delete} onPress={() => onDelete(id)}>
+        <TouchableOpacity
+          style={styles.delete}
+          onPress={() => store.deletePizza(id)}>
           <Text style={{fontSize: 20}}>×</Text>
         </TouchableOpacity>
       </View>
@@ -37,15 +30,15 @@ const PurchaseItem = ({
           <TouchableOpacity
             onPress={() => {
               if (amount - 1 < 1) {
-                onDelete(id);
+                store.deletePizza(id);
               } else {
-                onChangeAmount(id, -1);
+                store.changePizzaAmount(id, -1);
               }
             }}>
             <Text style={styles.counterText}>–</Text>
           </TouchableOpacity>
           <Text style={styles.counterText}>{amount}</Text>
-          <TouchableOpacity onPress={() => onChangeAmount(id, 1)}>
+          <TouchableOpacity onPress={() => store.changePizzaAmount(id, 1)}>
             <Text style={styles.counterText}>+</Text>
           </TouchableOpacity>
         </View>
@@ -63,7 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   purchaseWrapper: {
-    height: 140,
+    height: 150,
   },
   purchaseHead: {
     height: 90,
@@ -71,15 +64,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#c8c8c8',
   },
   purchaseBottom: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#c8c8c8',
+    paddingBottom: 15,
   },
   pizzaWrapper: {
     display: 'flex',
